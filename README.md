@@ -2,14 +2,55 @@
 
 ## Raspbian x32 (Jessie)
 
+In this emulation we are going to emulate an old raspbian version:
+
+* [Raspbian Lite - Jessie (x32)][web-rpi-jessie-lite-32]
+* [Kernel QEMU v4.4.34 - Jessie (x32)][web-rpi-jessie-lite-32-kernel]
+
+macOS (QEMU emulation with GUI):
+
 ```txt
-sudo qemu-system-arm -kernel kernel-qemu-4.4.34-jessie -cpu arm1176 -m 256 -M versatilepb -serial stdio -append "root=/dev/sda2 rootfstype=ext4 rw" -drive file=2017-04-10-raspbian-jessie.img,format=raw -net nic -net user,hostfwd=tcp::5022-:22
+qemu-system-arm \
+-kernel kernel-qemu-4.4.34-jessie \
+-cpu arm1176 \
+-m 256 \
+-M versatilepb \
+-serial stdio \
+-append "root=/dev/sda2 rootfstype=ext4 rw" \
+-drive file=2017-04-10-raspbian-jessie.img,format=raw \
+-net nic \
+-net user,hostfwd=tcp::5022-:22
 ```
 
-Linux:
+macOS (QEMU emulation without GUI):
 
 ```txt
-sudo qemu-system-arm -kernel kernel-qemu-4.4.34-jessie -cpu arm1176 -m 256 -M versatilepb -serial stdio -append "root=/dev/sda2 rootfstype=ext4 rw" -drive file=2017-04-10-raspbian-jessie.img,format=raw -net nic -net user,hostfwd=tcp::5022-:22 -net tap,ifname=vnet0,script=no,downscript=no
+qemu-system-arm \
+-kernel kernel-qemu-4.4.34-jessie \
+-cpu arm1176 \
+-m 256 \
+-M versatilepb \
+-nographic \
+-append "console=ttyAMA0 root=/dev/sda2 rootfstype=ext4 rw" \
+-drive file=${IMG},format=raw \
+-net nic \
+-net user,hostfwd=tcp::5022-:22
+```
+
+Linux (QEMU emulation with GUI):
+
+```txt
+sudo qemu-system-arm \
+-kernel kernel-qemu-4.4.34-jessie \
+-cpu arm1176 \
+-m 256 \
+-M versatilepb \
+-serial stdio \
+-append "root=/dev/sda2 rootfstype=ext4 rw" \
+-drive file=2017-04-10-raspbian-jessie.img,format=raw \
+-net nic \
+-net user,hostfwd=tcp::5022-:22 \
+-net tap,ifname=vnet0,script=no,downscript=no
 ```
 
 ## Raspios Lite ARM64 (Bullseye) on QEMU
@@ -62,7 +103,16 @@ qemu-img resize 2023-02-21-raspios-bullseye-arm64-lite.qcow2 8g
 ```
 
 ```txt
-qemu-system-aarch64 -m 1024 -M raspi3b -kernel kernel8.img -dtb bcm2710-rpi-3-b-plus.dtb -sd 2023-02-21-raspios-bullseye-arm64-lite.qcow2 -append "console=ttyAMA0 root=/dev/mmcblk0p2 rw rootwait rootfstype=ext4" -nographic -device usb-net,netdev=net0 -netdev user,id=net0,hostfwd=tcp::5555-:22
+qemu-system-aarch64 \
+-m 1024 \
+-M raspi3b \
+-kernel kernel8.img \
+-dtb bcm2710-rpi-3-b-plus.dtb \
+-sd 2023-02-21-raspios-bullseye-arm64-lite.qcow2 \
+-append "console=ttyAMA0 root=/dev/mmcblk0p2 rw rootwait rootfstype=ext4" \
+-nographic \
+-device usb-net,netdev=net0 \
+-netdev user,id=net0,hostfwd=tcp::5555-:22
 ```
 
 ```txt
@@ -79,7 +129,7 @@ qemu-system-aarch64 \
 ```
 
 After successfully login with credentials `pi:raspberry` we should manually
-start sshd service:
+start ssh service:
 
 ```txt
 sudo service ssh start
@@ -98,7 +148,7 @@ scp -P5555 Downloads/rasp.md pi@127.0.0.1:/home/pi
 scp -P5555 pi@127.0.0.1:/home/pi/asd.txt .
 ```
 
-## Resources / Kaynaklar
+## Resources
 
 - [Official Raspberry PI OS Images Download][web-rpi-dl]
 - [Qemu kernel for emulating Rpi on QEMU][web-gh-qemu-rpi-kernel]
@@ -111,3 +161,5 @@ scp -P5555 pi@127.0.0.1:/home/pi/asd.txt .
 [web-rpi-dl]: https://downloads.raspberrypi.org/
 [web-so-qemu-rpi3]: https://stackoverflow.com/questions/61562014/qemu-kernel-for-raspberry-pi-3-with-networking-and-virtio-support
 [web-reddit-qemu-bullseye]: https://www.reddit.com/r/qemu_kvm/comments/10my3rq/guides_to_emulate_a_raspberry_pi_os_buster/
+[web-rpi-jessie-lite-32]: https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-04-10/2017-04-10-raspbian-jessie-lite.zip
+[web-rpi-jessie-lite-32-kernel]: https://github.com/dhruvvyas90/qemu-rpi-kernel/blob/master/kernel-qemu-4.4.34-jessie
