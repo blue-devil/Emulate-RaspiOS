@@ -5,6 +5,16 @@ usage() {
     exit
 }
 
+# check operating system
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    echo "[+] Linux running"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "[+] macOS running"
+else
+    echo "[-] This script only works on Linux and macOS"
+    usage
+fi
+
 # check commandline parameters
 if [[ "${1}" = "-h" ]] || [[ "${1}" = "--help" ]]  || [[ $# -eq 0 ]] ; then
     usage
