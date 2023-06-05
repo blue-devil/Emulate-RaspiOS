@@ -4,8 +4,8 @@
 
 In this emulation we are going to emulate an old raspbian version:
 
-* [Raspbian Lite - Jessie (x32)][web-rpi-jessie-lite-32]
-* [Kernel QEMU v4.4.34 - Jessie (x32)][web-rpi-jessie-lite-32-kernel]
+- [Raspbian Lite - Jessie (x32)][web-rpi-jessie-lite-32]
+- [Kernel QEMU v4.4.34 - Jessie (x32)][web-rpi-jessie-lite-32-kernel]
 
 macOS (QEMU emulation with GUI):
 

@@ -13,12 +13,17 @@ fi
 QCW=${1}
 
 qemu-system-aarch64 \
--m 1024 \
+-m 1G \
 -M raspi3b \
--kernel kernel8.img \
+-smp 4 \
+-usb \
+-device usb-mouse \
+-device usb-kbd \
+-device 'usb-net,netdev=net0' \
+-netdev 'user,id=net0,hostfwd=tcp::5555-:22' \
+-drive "file=${QCW},index=0,format=raw" \
 -dtb bcm2710-rpi-3-b-plus.dtb \
--sd ${QCW} \
--append "console=ttyAMA0 root=/dev/mmcblk0p2 rw rootwait rootfstype=ext4" \
--nographic \
--device usb-net,netdev=net0 \
--netdev user,id=net0,hostfwd=tcp::5555-:22
+-kernel kernel8.img \
+-append 'rw earlyprintk loglevel=8 console=ttyAMA0,115200 dwc_otg.lpm_enable=0 root=/dev/mmcblk0p2 rootdelay=1' \
+-no-reboot \
+-nographic
