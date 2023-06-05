@@ -3,6 +3,8 @@
 *.qcow2
 *.xz
 *.zip
+*.dtb
+kernel-*
 
 # General
 .DS_Store
