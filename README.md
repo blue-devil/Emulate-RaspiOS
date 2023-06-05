@@ -1,11 +1,70 @@
 # Raspbian on QEMU
 
+This repo contains bash scripts to run old raspbian and newer Raspberry Pi OS
+images. My main aim is to emulate "lite" Aarch and Armhf images and then
+establish an ssh connection to those images.
+
+In directories there are 2 bash scripts: `setup.sh` and `run.sh`
+
+## How To Use
+
+`setup.sh` downloads image from its original server and prepares it to run
+with qemu.
+
+Example usage:
+
+```txt
+# 32-bit ARMHF Raspberry Pi OS Setup
+./setup.sh https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2023-05-03/2023-05-03-raspios-bullseye-armhf-lite.img.xz
+
+# 64-bit AARCH64 Raspberry Pi OS Setup
+./setup.sh https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2023-05-03/2023-05-03-raspios-bullseye-arm64-lite.img.xz
+```
+
+When the images are ready for emulation, we can now run them:
+
+```txt
+# Emulate Raspberry Pi OS ARMHF Lite image
+./run.sh 2023-05-03-raspios-bullseye-armhf-lite.img
+
+# Emulate Raspberry Pi OS ARM64 Lite image
+/run.sh 2023-05-03-raspios-bullseye-arm64-lite.img
+```
+
+Login credentials(both x32 and x64):
+
+```txt
+user: pi
+pass: raspberry
+```
+
+To establish an SSH connection run the command below in emulated raspberry
+image:
+
+```txt
+# Raspberry Pi OS (x32 and x64)
+sudo systemctl start ssh
+
+# Old Raspbian image
+sudo service ssh start
+```
+
+### Kernel Info
+
+The kernels you extracted from images have different
+[purposes][web-kernel-types-raspbian]:
+
+* kernel.img is 32-bit for BCM2835 (RPi1 & Zero)
+* kernel7.img is 32-bit for BCM2836 (RPi2) and BCM2837 (RPi3)
+* kernel7l.img is 32-bit for BCM2711 (RPi4)
+* kernel8.img is 64-bit for BCM2837 (RPi3) or BCM2711 (RPi4)
+
 ## Raspbian x32 (Jessie)
 
 In this emulation we are going to emulate an old raspbian version:
 
-- [Raspbian Lite - Jessie (x32)][web-rpi-jessie-lite-32]
-- [Kernel QEMU v4.4.34 - Jessie (x32)][web-rpi-jessie-lite-32-kernel]
+* [Raspbian Lite - Jessie (x32)][web-rpi-jessie-lite-32]
+* [Kernel QEMU v4.4.34 - Jessie (x32)][web-rpi-jessie-lite-32-kernel]
 
 macOS (QEMU emulation with GUI):
 
@@ -150,11 +209,11 @@ scp -P5555 pi@127.0.0.1:/home/pi/asd.txt .
 
 ## Resources
 
-- [Official Raspberry PI OS Images Download][web-rpi-dl]
-- [Qemu kernel for emulating Rpi on QEMU][web-gh-qemu-rpi-kernel]
-- [Azeria - Raspberry Pi on QEMU][web-azeria-rpionqemu]
-- [StackOverflow - QEMU kernel for raspberry pi 3 with networking and virtio support][web-so-qemu-rpi3]
-- [Reddit - Guide to emulate raspios buster][web-reddit-qemu-bullseye]
+* [Official Raspberry PI OS Images Download][web-rpi-dl]
+* [Qemu kernel for emulating Rpi on QEMU][web-gh-qemu-rpi-kernel]
+* [Azeria - Raspberry Pi on QEMU][web-azeria-rpionqemu]
+* [StackOverflow - QEMU kernel for raspberry pi 3 with networking and virtio support][web-so-qemu-rpi3]
+* [Reddit - Guide to emulate raspios buster][web-reddit-qemu-bullseye]
 
 [web-gh-qemu-rpi-kernel]: https://github.com/dhruvvyas90/qemu-rpi-kernel
 [web-azeria-rpionqemu]: https://azeria-labs.com/emulate-raspberry-pi-with-qemu/
@@ -163,3 +222,4 @@ scp -P5555 pi@127.0.0.1:/home/pi/asd.txt .
 [web-reddit-qemu-bullseye]: https://www.reddit.com/r/qemu_kvm/comments/10my3rq/guides_to_emulate_a_raspberry_pi_os_buster/
 [web-rpi-jessie-lite-32]: https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-04-10/2017-04-10-raspbian-jessie-lite.zip
 [web-rpi-jessie-lite-32-kernel]: https://github.com/dhruvvyas90/qemu-rpi-kernel/blob/master/kernel-qemu-4.4.34-jessie
+[web-kernel-types-raspbian]: https://raspberrypi.stackexchange.com/a/104726
