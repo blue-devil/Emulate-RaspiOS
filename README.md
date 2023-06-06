@@ -54,17 +54,17 @@ sudo service ssh start
 The kernels you extracted from images have different
 [purposes][web-kernel-types-raspbian]:
 
-* kernel.img is 32-bit for BCM2835 (RPi1 & Zero)
-* kernel7.img is 32-bit for BCM2836 (RPi2) and BCM2837 (RPi3)
-* kernel7l.img is 32-bit for BCM2711 (RPi4)
-* kernel8.img is 64-bit for BCM2837 (RPi3) or BCM2711 (RPi4)
+- kernel.img is 32-bit for BCM2835 (RPi1 & Zero)
+- kernel7.img is 32-bit for BCM2836 (RPi2) and BCM2837 (RPi3)
+- kernel7l.img is 32-bit for BCM2711 (RPi4)
+- kernel8.img is 64-bit for BCM2837 (RPi3) or BCM2711 (RPi4)
 
 ## Raspbian x32 (Jessie)
 
 In this emulation we are going to emulate an old raspbian version:
 
-* [Raspbian Lite - Jessie (x32)][web-rpi-jessie-lite-32]
-* [Kernel QEMU v4.4.34 - Jessie (x32)][web-rpi-jessie-lite-32-kernel]
+- [Raspbian Lite - Jessie (x32)][web-rpi-jessie-lite-32]
+- [Kernel QEMU v4.4.34 - Jessie (x32)][web-rpi-jessie-lite-32-kernel]
 
 macOS (QEMU emulation with GUI):
 
@@ -191,7 +191,11 @@ After successfully login with credentials `pi:raspberry` we should manually
 start ssh service:
 
 ```txt
+# On raspbian
 sudo service ssh start
+
+# On Raspberry Pi OS
+sudo systemctl start ssh
 ```
 
 Now we can ssh to our qemu machine or send/get files with scp:
@@ -209,11 +213,11 @@ scp -P5555 pi@127.0.0.1:/home/pi/asd.txt .
 
 ## Resources
 
-* [Official Raspberry PI OS Images Download][web-rpi-dl]
-* [Qemu kernel for emulating Rpi on QEMU][web-gh-qemu-rpi-kernel]
-* [Azeria - Raspberry Pi on QEMU][web-azeria-rpionqemu]
-* [StackOverflow - QEMU kernel for raspberry pi 3 with networking and virtio support][web-so-qemu-rpi3]
-* [Reddit - Guide to emulate raspios buster][web-reddit-qemu-bullseye]
+- [Official Raspberry PI OS Images Download][web-rpi-dl]
+- [Qemu kernel for emulating Rpi on QEMU][web-gh-qemu-rpi-kernel]
+- [Azeria - Raspberry Pi on QEMU][web-azeria-rpionqemu]
+- [StackOverflow - QEMU kernel for raspberry pi 3 with networking and virtio support][web-so-qemu-rpi3]
+- [Reddit - Guide to emulate raspios buster][web-reddit-qemu-bullseye]
 
 [web-gh-qemu-rpi-kernel]: https://github.com/dhruvvyas90/qemu-rpi-kernel
 [web-azeria-rpionqemu]: https://azeria-labs.com/emulate-raspberry-pi-with-qemu/

@@ -47,3 +47,6 @@ qemu-system-aarch64 \
 -append 'rw earlyprintk loglevel=8 console=ttyAMA0,115200 dwc_otg.lpm_enable=0 root=/dev/mmcblk0p2 rootdelay=1' \
 -no-reboot \
 -nographic
+
+#-netdev user,id=net0 \
+#-device usb-net,netdev=net0,id=net0,mac=52:54:00:c9:18:27 \
